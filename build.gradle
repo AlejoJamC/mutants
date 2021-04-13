@@ -3,25 +3,31 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.32'
 }
 
-group "com.conekta"
+group "com.conekta.mutants"
 version "0.0.1"
 mainClassName = "com.conekta.mutants.MutantAppKt"
 
 repositories {
     mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://kotlin.bintray.com/ktor' }
+    maven { url 'https://kotlin.bintray.com/kotlinx' }
 }
 
 dependencies {
     // Kotlin ktor
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "io.ktor:ktor-server-jetty:$ktor_version"
-    implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
 
     // Web Server
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-core-jvm:$ktor_version"
     implementation "io.ktor:ktor-client-jetty:$ktor_version"
+
+    // Logging
+    implementation "ch.qos.logback:logback-classic:$logback_version"
 
     // Content Negotiation
     implementation "io.ktor:ktor-jackson:$ktor_version"
@@ -35,4 +41,17 @@ dependencies {
     // Testing
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.4.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation "io.mockk:mockk:1.10.2"
+    testImplementation "io.ktor:ktor-client-mock:$ktor_version"
+    testImplementation "io.ktor:ktor-client-mock-jvm:$ktor_version"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.conekta.mutants.MutantAppKt'
+    }
+
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }

@@ -18,15 +18,13 @@ class HealthController(
     private val version: String
 
     init {
-
-        val orchestratorSettings: Mutant = config.extract(APP_CONFIG_MUTANT)
-        version = orchestratorSettings.version
+        val mutantConfig: Mutant = config.extract(APP_CONFIG_MUTANT)
+        version = mutantConfig.version
 
         route.route("/health") {
             get {
                 call.respond(mapOf("status" to "UP", "version" to version))
             }
         }
-
     }
 }

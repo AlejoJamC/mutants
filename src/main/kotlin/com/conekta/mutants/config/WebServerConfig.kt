@@ -1,6 +1,7 @@
 package com.conekta.mutants.config
 
 import com.conekta.mutants.composers.ControllerComposer
+import com.conekta.mutants.composers.ServiceComposer
 import com.conekta.mutants.entities.ApiError
 import com.conekta.mutants.entities.ApplicationError
 import com.conekta.mutants.entities.ErrorInfo
@@ -19,10 +20,12 @@ import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
 
+
 class WebServerConfig(
     application: Application,
     config: Config,
     messages: Messages,
+    serviceComposer: ServiceComposer
 ) {
     private val logger by lazy { loggerFor<WebServerConfig>() }
 
@@ -54,7 +57,7 @@ class WebServerConfig(
             // Base project routing
             routing {
                 route(MUTANT_BASE_URI) {
-                    ControllerComposer(config = config, route = this)
+                    ControllerComposer(config = config, route = this, serviceComposer = serviceComposer)
                 }
             }
         }

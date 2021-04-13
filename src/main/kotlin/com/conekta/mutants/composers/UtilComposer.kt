@@ -7,6 +7,7 @@ import com.typesafe.config.Config
 import io.github.config4k.extract
 import java.util.Locale
 
+
 class UtilComposer(config: Config) {
     private val locale: Locale
     val messages: Messages
