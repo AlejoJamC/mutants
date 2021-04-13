@@ -1,0 +1,38 @@
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+}
+
+group "com.conekta"
+version "0.0.1"
+mainClassName = "com.conekta.mutants.MutantAppKt"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Kotlin ktor
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "io.ktor:ktor-server-jetty:$ktor_version"
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "io.ktor:ktor-server-core:$ktor_version"
+
+    // Web Server
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-core-jvm:$ktor_version"
+    implementation "io.ktor:ktor-client-jetty:$ktor_version"
+
+    // Content Negotiation
+    implementation "io.ktor:ktor-jackson:$ktor_version"
+    implementation "io.ktor:ktor-client-jackson:$ktor_version"
+    implementation "io.ktor:ktor-client-json-jvm:$ktor_version"
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.11.2'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.2'
+    compile group: 'com.typesafe', name: 'config', version: '1.4.0'
+    compile group: 'io.github.config4k', name: 'config4k', version: '0.4.2'
+
+    // Testing
+    testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+    testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+}
