@@ -8,5 +8,7 @@ sealed class MutantException(
     override var code: String,
     override var args: List<String>? = null
 ) : ApplicationError(httpsStatus, code, args) {
+    class InvalidDNAChar : MutantException(HttpStatusCode.BadRequest, "error.dna.invalid.char")
+    class AsymmetricDNAData : MutantException(HttpStatusCode.BadRequest, "error.dna.asymmetric.data")
     class HumanDNAException : MutantException(HttpStatusCode.Forbidden, "error.dna.human")
 }
