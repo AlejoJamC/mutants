@@ -12,7 +12,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.jetty.EngineMain.main(args)
 fun Application.module(testing: Boolean = false) {
     val config = ConfigFactory.load()
     val utilComposer = UtilComposer(config)
-    val serviceComposer = ServiceComposer()
+    val serviceComposer = ServiceComposer(config)
 
     WebServerConfig(
         application = this,

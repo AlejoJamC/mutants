@@ -11,4 +11,5 @@ sealed class MutantException(
     class InvalidDNAChar : MutantException(HttpStatusCode.BadRequest, "error.dna.invalid.char")
     class AsymmetricDNAData : MutantException(HttpStatusCode.BadRequest, "error.dna.asymmetric.data")
     class HumanDNAException : MutantException(HttpStatusCode.Forbidden, "error.dna.human")
+    class MaxDNASequenceException : MutantException(HttpStatusCode.Forbidden, "error.dna.max.sequence.allowed")
 }
