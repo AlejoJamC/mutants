@@ -1,6 +1,8 @@
 package com.conekta.mutants.services
 
+import com.conekta.mutants.exceptions.MutantException
 import com.conekta.mutants.utils.loggerFor
+import kotlin.random.Random
 
 
 class MutantService {
@@ -10,7 +12,12 @@ class MutantService {
         logger.debug("On isMutant for DNA frame: [$dna]")
 
         //TODO: define dna algorithm
+        if (!validateDNA(dna)) throw MutantException.HumanDNAException()
 
         return true
+    }
+
+    private fun validateDNA(dna: List<String>): Boolean {
+        return Random.nextBoolean()
     }
 }
