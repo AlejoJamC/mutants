@@ -8,7 +8,6 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-
 class MutantController(
     router: Route,
     private val mutantService: MutantService

@@ -3,6 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.32'
 }
 
+apply plugin: "kotlin"
+apply plugin: "idea"
+
+sourceCompatibility = 1.8
+
 group "com.conekta.mutants"
 version "0.0.1"
 mainClassName = "com.conekta.mutants.MutantAppKt"
@@ -38,6 +43,9 @@ dependencies {
     compile group: 'com.typesafe', name: 'config', version: '1.4.0'
     compile group: 'io.github.config4k', name: 'config4k', version: '0.4.2'
 
+    // Mongodb
+    implementation 'org.litote.kmongo:kmongo-coroutine:4.2.6'
+
     // Testing
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -54,4 +62,10 @@ jar {
     }
 
     from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = 1.8
+    }
 }
