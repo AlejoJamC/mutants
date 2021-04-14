@@ -5,7 +5,6 @@ import com.conekta.mutants.controllers.MutantController
 import com.typesafe.config.Config
 import io.ktor.routing.Route
 
-
 class ControllerComposer(
     config: Config,
     route: Route,

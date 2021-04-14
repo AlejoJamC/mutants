@@ -1,7 +1,9 @@
 package com.conekta.mutants.services
 
+import com.conekta.mutants.entities.DNAVerified
 import com.conekta.mutants.entities.Mutant
 import com.conekta.mutants.exceptions.MutantException
+import com.conekta.mutants.repositories.MutantRepository
 import com.conekta.mutants.utils.Constants.APP_CONFIG_MUTANT
 import com.conekta.mutants.utils.loggerFor
 import com.typesafe.config.Config
@@ -9,14 +11,22 @@ import io.github.config4k.extract
 import java.lang.RuntimeException
 
 
-class MutantService(private val config: Config) {
+class MutantService(
+    private val config: Config,
+    private val mutantRepository: MutantRepository
+) {
     private val logger by lazy { loggerFor<MutantService>() }
 
     suspend fun isMutant(dna: List<String>): Boolean {
         logger.debug("On isMutant for DNA frame: [$dna]")
 
+        // Struct - data validation
         validateInput(dna)
-        if (!validateDNA(dna)) throw MutantException.HumanDNAException()
+        // Validate DNA
+        val result = validateDNA(dna)
+        // Store result
+        mutantRepository.addVerifiedDNA(DNAVerified(dna = dna, isMutant = result))
+        if (result.not()) throw MutantException.HumanDNAException()
 
         return true
     }
