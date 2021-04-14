@@ -10,7 +10,6 @@ import io.ktor.routing.Route
 import io.ktor.routing.get
 import io.ktor.routing.route
 
-
 class HealthController(
     config: Config,
     route: Route,

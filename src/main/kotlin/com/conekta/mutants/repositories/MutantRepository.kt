@@ -3,12 +3,12 @@ package com.conekta.mutants.repositories
 import com.conekta.mutants.entities.DNAVerified
 import com.conekta.mutants.entities.MongodbConfig
 import com.conekta.mutants.utils.Constants
+import com.conekta.mutants.utils.Constants.MONGO_COLLECTION_DNA_VERIFIED
 import com.conekta.mutants.utils.loggerFor
 import com.typesafe.config.Config
 import io.github.config4k.extract
 import org.litote.kmongo.reactivestreams.*
 import org.litote.kmongo.coroutine.*
-
 
 class MutantRepository(
     config: Config,
@@ -28,9 +28,5 @@ class MutantRepository(
             .getDatabase(mongoDatabase)
             .getCollection<DNAVerified>(MONGO_COLLECTION_DNA_VERIFIED)
             .insertOne(dnaResult)
-    }
-
-    companion object {
-        const val MONGO_COLLECTION_DNA_VERIFIED = "dna_verified"
     }
 }

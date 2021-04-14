@@ -11,4 +11,7 @@ object Constants {
 
     // Fields
     const val IS_MUTANT = "is_mutant"
+
+    // MongoDB
+    const val MONGO_COLLECTION_DNA_VERIFIED = "dna_verified"
 }

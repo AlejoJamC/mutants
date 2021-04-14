@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class StatResponseDTO(
-    val countMutantDna: Int,
-    val countHumanDna: Int,
+    val countMutantDna: Long,
+    val countHumanDna: Long,
     val ratio: Double
 )
