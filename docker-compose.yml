@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mutant:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      environment:
+        - locale = es
+        - country_code = co
+      env_file:
+        - ./env.yml
+      restart: always
+      ports:
+        - 8080:80
+      command: >
+        ./gradlew clean build --stacktrace
+
