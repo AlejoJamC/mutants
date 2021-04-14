@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Verifier
+control GUI
+control WAF
+control MutantRest
+control MutantDB
+
+== Level 1 & 2 ==
+
+Verifier -> GUI:  /mutants
+GUI -> WAF:
+WAF -> MutantRest: POST validate DNA Frames
+MutantRest -> WAF: {is_mutant}
+WAF -> GUI:
+GUI -> Verifier: 200 OK
+alt Is not a mutant
+Verifier -> MutantRest: Not mutant DNA frame
+MutantRest -> Verifier: 403 Forbidden
+end
+alt Data not allowed by MutantRest
+alt not symmetric
+Verifier -> MutantRest: DNA frame without matrix format
+MutantRest -> Verifier: 400 Bad request
+else Chars not allowed
+Verifier -> MutantRest: DNA frame with random chars
+MutantRest -> Verifier: 400 Bad request
+end
+end
+
+== Level 3 ==
+
+Verifier -> GUI: /mutants
+GUI -> WAF:
+WAF -> MutantRest: POST validate DNA Frames
+MutantRest --> MutantDB: {store dna validation event}
+MutantDB --> MutantRest: Saved
+MutantRest -> WAF: {is_mutant}
+WAF -> GUI:
+GUI -> Verifier: 200 OK
+alt Is not a mutant
+Verifier -> MutantRest: Not mutant DNA frame
+MutantRest --> MutantDB: {store dna validation event}
+MutantDB --> MutantRest: Saved
+MutantRest -> Verifier: 403 Forbidden
+end
+alt Data not allowed by MutantRest
+alt not symmetric
+Verifier -> MutantRest: DNA frame without matrix format
+MutantRest -> Verifier: 400 Bad request
+else Chars not allowed
+Verifier -> MutantRest: DNA frame with random chars
+MutantRest -> Verifier: 400 Bad request
+else Fail database query
+Verifier -> MutantDB: Runtime db error
+MutantDB -> Verifier: 500 Internal
+end
+end
+
+Verifier -> GUI: /stats
+GUI -> WAF:
+WAF -> MutantRest: Get mutant ratio and amounts
+MutantRest --> MutantDB: {filter and group data}
+MutantDB --> MutantRest: result
+MutantRest -> WAF: {counts Mutant, human and ratio}
+WAF -> GUI:
+GUI -> Verifier: 200 OK {counts Mutant, human and ratio}
+
+@enduml
