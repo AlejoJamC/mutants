@@ -1,0 +1,13 @@
+[Unit]
+Description=mutant-api
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/java -jar -Duser.timezone=$TIMEZONE -Dnetworkaddress.cache.ttl=60 -Dnetworkaddress.cache.negative.ttl=30 /root/code/*.jar
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mutantapi
+
+[Install]
+WantedBy=multi-user.target
