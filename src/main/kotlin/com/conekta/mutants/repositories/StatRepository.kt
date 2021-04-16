@@ -10,12 +10,9 @@ import com.conekta.mutants.utils.NumberFormat.Companion.roundTotal
 import com.conekta.mutants.utils.loggerFor
 import com.typesafe.config.Config
 import io.github.config4k.extract
-import org.litote.kmongo.reactivestreams.*
 import org.litote.kmongo.coroutine.*
 import org.litote.kmongo.eq
-import org.litote.kmongo.group
 import org.litote.kmongo.match
-import org.litote.kmongo.sum
 
 class StatRepository(
     config: Config,
